@@ -1,0 +1,23 @@
+###
+
+POST http://localhost:3002/users/signUp
+Content-Type: application/json
+
+{
+    "name": "Rogelio",
+    "email": "emai@ail.com",
+    "password": "1234"
+}
+
+###
+
+GET http://localhost:3002/users/
+
+###
+POST http://localhost:3002/users/logIn
+Content-Type: application/json
+
+{
+    "email": "emai@ail.com",
+    "password": "1234"
+}
