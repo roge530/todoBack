@@ -46,7 +46,8 @@ router.post('/logIn', (req, res) => __awaiter(void 0, void 0, void 0, function* 
             return res.status(401).json({ message: 'Invalid password' });
         }
         const { token, expiresIn } = (0, tokenManager_1.generateToken)(user.email);
-        res.status(200).json({ token, expiresIn });
+        const name = user.name;
+        res.status(200).json({ token, expiresIn, name });
     }
     catch (error) {
         return res.status(500).json({ message: error.message });

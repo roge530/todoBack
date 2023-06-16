@@ -38,7 +38,8 @@ router.post('/logIn', async (req, res) => {
         }
 
         const { token, expiresIn } = generateToken(user.email);
-        res.status(200).json({ token, expiresIn });
+        const name = user.name;
+        res.status(200).json({ token, expiresIn, name });
     } catch (error: any) {
         return res.status(500).json({ message: error.message });
     }
