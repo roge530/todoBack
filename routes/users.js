@@ -13,10 +13,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
-const router = (0, express_1.Router)();
 const user_1 = __importDefault(require("../models/user"));
 const tokenManager_1 = require("../utils/tokenManager");
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
+const router = (0, express_1.Router)();
 router.post('/signUp', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const newUser = new user_1.default({
         name: req.body.name,
@@ -47,7 +47,8 @@ router.post('/logIn', (req, res) => __awaiter(void 0, void 0, void 0, function* 
         }
         const { token, expiresIn } = (0, tokenManager_1.generateToken)(user.email);
         const name = user.name;
-        res.status(200).json({ token, expiresIn, name });
+        const id = user.id;
+        res.status(200).json({ token, expiresIn, name, id });
     }
     catch (error) {
         return res.status(500).json({ message: error.message });

@@ -25,3 +25,12 @@ Content-Type: application/json
 ###
 GET http://localhost:3002/v
 Authorization: Bearer 
+
+###
+POST http://localhost:3002/activity/newActivity/648be7b7fec9178f4c9c0352
+Content-Type: application/json
+
+{
+    "name": "Actividad 1",
+    "status": "Doing"
+}

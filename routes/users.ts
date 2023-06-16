@@ -1,10 +1,11 @@
-import {Router} from 'express';
-const router = Router();
+import {Router, Request, Response} from 'express';
 import UserModel from '../models/user'
 import { generateToken } from '../utils/tokenManager';
 import bcrypt from 'bcryptjs';
 
-router.post('/signUp', async (req, res) => {
+const router: Router = Router();
+
+router.post('/signUp', async (req: Request, res: Response) => {
     const newUser = new UserModel({
         name: req.body.name,
         email: req.body.email,
@@ -23,7 +24,7 @@ router.post('/signUp', async (req, res) => {
     }
 })
 
-router.post('/logIn', async (req, res) => {
+router.post('/logIn', async (req: Request, res: Response) => {
     try {
         const { email, password } = req.body;
 
@@ -39,7 +40,8 @@ router.post('/logIn', async (req, res) => {
 
         const { token, expiresIn } = generateToken(user.email);
         const name = user.name;
-        res.status(200).json({ token, expiresIn, name });
+        const id = user.id;
+        res.status(200).json({ token, expiresIn, name, id });
     } catch (error: any) {
         return res.status(500).json({ message: error.message });
     }
