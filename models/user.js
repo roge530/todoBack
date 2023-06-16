@@ -38,6 +38,10 @@ const UserSchema = new mongoose_1.Schema({
         type: String,
         required: true,
     },
+    activities: {
+        type: [Object],
+        default: [],
+    },
 });
 const UserModel = mongoose_1.default.model('User', UserSchema);
 exports.default = UserModel;
