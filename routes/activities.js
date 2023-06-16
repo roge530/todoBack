@@ -46,8 +46,8 @@ router.get('/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         return res.status(500).json({ error: 'Server error' });
     }
 }));
-router.patch('/editName', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { idUser, idActivity, name } = req.body;
+router.patch('/editActivity', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { idUser, idActivity, status, name } = req.body;
     try {
         const user = yield user_1.default.findById(idUser);
         if (!user)
@@ -63,11 +63,18 @@ router.patch('/editName', (req, res) => __awaiter(void 0, void 0, void 0, functi
         if (activityIndex === -1) {
             return res.status(404).json({ error: 'Activity does not exist' });
         }
-        activities[activityIndex].name = name;
-        user.activities = activities;
-        user.markModified('activities');
+        if (status !== null) {
+            activities[activityIndex].status = status;
+            user.activities = activities;
+            user.markModified('activities');
+        }
+        if (name !== null) {
+            activities[activityIndex].name = name;
+            user.activities = activities;
+            user.markModified('activities');
+        }
         yield user.save();
-        return res.json({ message: 'Activity name updated' });
+        return res.json({ message: 'Activity updated' });
     }
     catch (error) {
         return res.status(500).json({ error: 'Server error' });
