@@ -24,11 +24,10 @@ router.post('/newActivity/:id', (req, res) => __awaiter(void 0, void 0, void 0, 
         if (!user)
             return res.status(404).json({ error: 'User does not exists' });
         const activityId = (0, uuid_1.v4)();
-        console.log(req.body);
         const activityWithId = Object.assign({ id: activityId }, activity);
         user.activities.push(activityWithId);
         yield user.save();
-        return res.json(user);
+        return res.json({ id: activityId });
     }
     catch (error) {
         return res.status(500).json({ error: 'Server error' });

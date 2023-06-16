@@ -13,12 +13,11 @@ router.post('/newActivity/:id', async (req: Request, res: Response) => {
 
         if (!user) return res.status(404).json({error: 'User does not exists'});
         const activityId = uuidv4();
-        console.log(req.body)
         const activityWithId = { id: activityId, ...activity };
         user.activities.push(activityWithId);
         await user.save();
 
-        return res.json(user);
+        return res.json({id: activityId});
     } catch (error: any) {
         return res.status(500).json({error: 'Server error'});
     }
