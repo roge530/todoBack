@@ -39,11 +39,12 @@ Content-Type: application/json
 GET http://localhost:3002/activity/648be7b7fec9178f4c9c0352
 
 ###
-PATCH http://localhost:3002/activity/editName
+PATCH http://localhost:3002/activity/editActivity
 Content-Type: application/json
 
 {
     "idUser": "648be7b7fec9178f4c9c0352",
     "idActivity": "2987db28-583a-4748-8a58-52e5d04f90f8",
-    "name": "actividad pepe"
+    "status": "done",
+    "name": null
 }

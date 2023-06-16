@@ -41,36 +41,45 @@ router.get('/:id', async (req: Request, res: Response) => {
     }
 });
 
-router.patch('/editName', async (req: Request, res: Response) => {
-    const { idUser, idActivity, name } = req.body;
+router.patch('/editActivity', async (req: Request, res: Response) => {
+    const { idUser, idActivity, status, name } = req.body;
 
     try {
         const user: IUser | null = await UserModel.findById(idUser);
 
         if (!user) return res.status(404).json({ error: 'User does not exist' });
-
+        
         let activityIndex = -1;
         const activities: Activity[] = user.activities as Activity[];
         for (let i = 0; i < activities.length; i++) {
-        if (activities[i].id === idActivity) {
-            activityIndex = i;
-            break;
-        }
+            if (activities[i].id === idActivity) {
+                activityIndex = i;
+                break;
+            }
         }
 
         if (activityIndex === -1) {
-        return res.status(404).json({ error: 'Activity does not exist' });
+            return res.status(404).json({ error: 'Activity does not exist' });
         }
 
-        activities[activityIndex].name = name;
-        user.activities = activities;
-        user.markModified('activities');
+        if (status !== null) {
+            activities[activityIndex].status = status;
+            user.activities = activities;
+            user.markModified('activities');
+        }
+
+        if (name !== null) {
+            activities[activityIndex].name = name;
+            user.activities = activities;
+            user.markModified('activities');
+        }
+
         await user.save();
 
-        return res.json({ message: 'Activity name updated' });
-    } catch (error: any) {
+        return res.json({ message: 'Activity updated' });
+    } catch (error) {
         return res.status(500).json({ error: 'Server error' });
     }
-});
+})
 
 export default router;
