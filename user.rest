@@ -34,3 +34,6 @@ Content-Type: application/json
     "name": "Actividad 1",
     "status": "Doing"
 }
+
+###
+GET http://localhost:3002/activity/648be7b7fec9178f4c9c0352
