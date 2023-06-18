@@ -82,4 +82,28 @@ router.patch('/editActivity', async (req: Request, res: Response) => {
     }
 })
 
+router.delete('/removeActivity/:id', async (req: Request, res: Response) => {
+    const { id } = req.params;
+    const activityID  = req.body.activityID;
+
+    try {
+        const user: IUser | null = await UserModel.findById(id);
+
+        if (!user) {
+            return res.status(404).json({ error: 'User does not exist' });
+        }
+
+        const activities: Activity[] = user.activities as Activity[];
+        const updatedActivities: Activity[] = activities.filter((activity: Activity) => activity.id !== activityID);
+
+        user.activities = updatedActivities;
+        user.markModified('activities');
+        await user.save();
+
+        return res.json({ message: 'Activity removed' });
+    } catch (error) {
+        return res.status(500).json({ error: 'Server error' });
+    }
+});
+
 export default router;
