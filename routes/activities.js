@@ -80,4 +80,23 @@ router.patch('/editActivity', (req, res) => __awaiter(void 0, void 0, void 0, fu
         return res.status(500).json({ error: 'Server error' });
     }
 }));
+router.delete('/removeActivity/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { id } = req.params;
+    const activityID = req.body.activityID;
+    try {
+        const user = yield user_1.default.findById(id);
+        if (!user) {
+            return res.status(404).json({ error: 'User does not exist' });
+        }
+        const activities = user.activities;
+        const updatedActivities = activities.filter((activity) => activity.id !== activityID);
+        user.activities = updatedActivities;
+        user.markModified('activities');
+        yield user.save();
+        return res.json({ message: 'Activity removed' });
+    }
+    catch (error) {
+        return res.status(500).json({ error: 'Server error' });
+    }
+}));
 exports.default = router;
