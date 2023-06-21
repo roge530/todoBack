@@ -37,7 +37,7 @@ const app = (0, express_1.default)();
 dotenv.config();
 const port = process.env.PORT;
 // Conectar a la base de datos de MongoDB
-mongoose_1.default.connect('mongodb://localhost:27017/todo')
+mongoose_1.default.connect(process.env.MONGODB_URI || '')
     .then(() => {
     console.log('Conexión exitosa a MongoDB');
 })
